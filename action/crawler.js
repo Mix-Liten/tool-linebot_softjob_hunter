@@ -26,12 +26,17 @@ const getJobsFormCurrentPage = async (url) => {
       const regex = /(.*)\/(.*)/
       const date = new Date()
       const today = [date.getMonth() + 1, date.getDate()]
+      // 搜尋前一天，確保沒有遺漏
+      const yesterday = [date.getMonth() + 1, ((new Date()).setDate(date.getDate() - 1)).getDate()]
       const datelist = jobslist.map(job => job.date.match(regex))
 
       let hasOtherDate = false
       datelist.forEach(date => {
         // date[] => [ '11/21', '11', '21', index: 0, input: '11/21', groups: undefined ]
-        if (date[1] !== today[0] || date[2] !== today[1]) {
+        if (
+          (date[1] !== today[0] || date[2] !== today[1]) &&
+          (date[1] !== yesterday[0] || date[2] !== yesterday[1])
+        ) {
           hasOtherDate = true
         }
       })
