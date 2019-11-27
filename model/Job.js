@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const JobSchema = new mongoose.Schema({
   title: {
@@ -7,20 +7,27 @@ const JobSchema = new mongoose.Schema({
   },
   company: {
     type: String,
-    required: true
+    // required: true
   },
   position: {
     type: String,
-    required: true
+    // required: true
   },
   href: {
     type: String,
     required: true
   },
   date: {
-    type: Date,
-    default: Date.now
+    type: String,
+    required: true
   },
-});
+  in_month: {
+    type: Boolean,
+    default: true
+  },
+}, {
+  timestamps: true,
+  versionKey: false,
+})
 
-module.exports = mongoose.model('Job', JobSchema);
+module.exports = mongoose.model('Job', JobSchema)
