@@ -24,10 +24,11 @@ const getJobsFormCurrentPage = async (url) => {
       const jobslist = await getPttJobslist(body)
 
       const regex = /(.*)\/(.*)/
-      const date = new Date()
-      const today = [date.getMonth() + 1, date.getDate()]
+      const todayDate = new Date()
+      const today = [todayDate.getMonth() + 1, todayDate.getDate()]
       // 搜尋前一天，確保沒有遺漏
-      const yesterday = [date.getMonth() + 1, ((new Date()).setDate(date.getDate() - 1)).getDate()]
+      let yesterdayDate = new Date((new Date()).setDate(todayDate.getDate() - 1))
+      const yesterday = [yesterdayDate.getMonth() + 1, yesterdayDate.getDate()]
       const datelist = jobslist.map(job => job.date.match(regex))
 
       let hasOtherDate = false
