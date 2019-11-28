@@ -1,4 +1,4 @@
-const db = require('../../database/dbconnection')
+const db = require('../../connection/db')
 const Job = require('../../model/Job')
 const { code, diffDate } = require('../../utils/time')
 
