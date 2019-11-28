@@ -1,6 +1,11 @@
-const getJobsFromDb = require('../action/getJobsFromDb')
-const saveNewJobsDataToDb = require('../action/saveNewJobsDataToDb')
-const { getJobs, dataBaseInit } = require('../action/crawler')
+const {
+  getJobsFromDb,
+  saveNewJobsDataToDb,
+} = require('../action/db/getJobs')
+const {
+  getJobs,
+  dataBaseInit,
+} = require('../action/crawler')
 
 const jobController = async (req, res) => {
   res.header('Content-Type', 'text/plain; charset=utf-8')

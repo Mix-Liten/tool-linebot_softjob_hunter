@@ -1,6 +1,6 @@
-const db = require('../database/dbconnection')
-const Job = require('../model/Job')
-const { code, diffDate } = require('../utils/time')
+const db = require('../../database/dbconnection')
+const Job = require('../../model/Job')
+const { code, diffDate } = require('../../utils/time')
 
 const getJobsFromDb = async () => {
   let result
@@ -23,4 +23,16 @@ const getJobsFromDb = async () => {
   return result
 }
 
-module.exports = getJobsFromDb
+const saveNewJobsDataToDb = jobslist => {
+  jobslist.forEach(job => {
+    let newJob = new Job(job)
+    newJob.save()
+      .then(res => console.log('新工作資料成功儲存\n' + res))
+      .catch(err => console.log('新工作資料儲存錯誤\n' + err))
+  })
+}
+
+module.exports = {
+  getJobsFromDb,
+  saveNewJobsDataToDb,
+}
