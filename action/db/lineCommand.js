@@ -6,7 +6,7 @@ const defaultWork = async () => {
   .find()
   .limit(10)
   .sort({ createdAt: -1 })
-  .select(selectField)
+  .select('title date href')
 }
 
 const search = async (searchField, word = '') => {
