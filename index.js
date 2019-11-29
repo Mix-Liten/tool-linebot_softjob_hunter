@@ -6,6 +6,7 @@ const request = require('request')
 const schedule = require('node-schedule')
 
 app.use(async (req, res, next) => {
+  if (req.url === '/') next()
   let start = new Date()
   await next()
   let ms = new Date() - start
