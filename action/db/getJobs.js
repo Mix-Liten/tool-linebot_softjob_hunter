@@ -11,11 +11,17 @@ const getJobsFromDb = async () => {
     .catch(err => result = null)
 
   // 職缺超過一個月，設定過期
+  // 職缺超過一年，從資料庫移除
   result = result.filter(job => {
     if (diffDate(+new Date(), code(job.createdAt)) > 30) {
       Job.update({ _id: job._id }, { in_month: false })
         .then(res => console.log('設定過期成功：' + res.title))
         .catch(err => console.log('設定過期失敗：' + err))
+      return false
+    }
+    if (diffDate(+new Date(), code(job.createdAt)) > 364) {
+      Job.remove({ _id: job._id })
+        .catch(err => console.log('刪除失敗：' + err))
       return false
     }
     return true
