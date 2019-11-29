@@ -6,6 +6,7 @@ const styleDataToMessage = dbData => {
   let msg = ''
   let num = 1
   let isMoreThanTwenty = dbData.length > 20
+  if (isMoreThanTwenty) dbData.pop()
   dbData.forEach(data => {
     msg += `${num++}. ${data.date} ${data.title}\n${process.env.BASEURL}${data.href}\n`
   })
