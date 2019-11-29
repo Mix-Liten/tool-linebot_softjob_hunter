@@ -6,7 +6,7 @@ const request = require('request')
 const schedule = require('node-schedule')
 
 app.use(async (req, res, next) => {
-  if (req.url === '/') next()
+  // if (req.url === '/') next()
   let start = new Date()
   await next()
   let ms = new Date() - start
@@ -29,7 +29,7 @@ let autoSchedule = schedule.scheduleJob('0 0 23 * * *', function () {
 })
 
 // 每天三十分鐘戳一下heroku server，避免app被睡
-let herokuSchedule = schedule.scheduleJob('* */30 * * * *', function () {
+let herokuSchedule = schedule.scheduleJob('0 */30 * * * *', function () {
   const URL = process.env.HEROKU_URL || 'http://localhost:5000/'
   request.get(URL)
 })
