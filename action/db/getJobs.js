@@ -23,11 +23,11 @@ const getJobsFromDb = async () => {
   return result
 }
 
-const saveNewJobsDataToDb = jobslist => {
-  jobslist.forEach(job => {
+const saveNewJobsDataToDb = async (jobslist) => {
+  await jobslist.forEach(async job => {
     let newJob = new Job(job)
-    newJob.save()
-      .then(res => console.log('新工作資料成功儲存\n' + res))
+    await newJob.save()
+      .then(res => console.log('新工作資料成功儲存：' + res.title))
       .catch(err => console.log('新工作資料儲存錯誤\n' + err))
   })
 }

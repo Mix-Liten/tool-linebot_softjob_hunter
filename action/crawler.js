@@ -5,13 +5,11 @@ const getJobs = async () => {
   const indexURL = process.env.PTT_SOFTJOB_URL.replace(/<pageNumber>/, '') // 最新的頁面沒有 pageNumber
   let result = []
   let jobslist = await getJobsFormCurrentPage(indexURL)
-
   do {
     result = [...result, ...jobslist.list]
-    if (jobslist.prevpageNumber === null) break
     nextURL = process.env.PTT_SOFTJOB_URL.replace(/<pageNumber>/, jobslist.prevpageNumber)
     jobslist = await getJobsFormCurrentPage(nextURL)
-  } while (!jobslist.hasOtherDate)
+  } while (!jobslist.onlyOtherDate)
   return result
 }
 
@@ -30,22 +28,17 @@ const getJobsFormCurrentPage = async (url) => {
       let yesterdayDate = new Date((new Date()).setDate(todayDate.getDate() - 1))
       const yesterday = [yesterdayDate.getMonth() + 1, yesterdayDate.getDate()]
       const datelist = jobslist.map(job => job.date.match(regex))
-
-      let hasOtherDate = false
-      datelist.forEach(date => {
+      let onlyOtherDate = false
+      if (datelist) {
         // date[] => [ '11/21', '11', '21', index: 0, input: '11/21', groups: undefined ]
-        if (
-          (date[1] !== today[0] || date[2] !== today[1]) &&
-          (date[1] !== yesterday[0] || date[2] !== yesterday[1])
-        ) {
-          hasOtherDate = true
-        }
-      })
-      let result = {
-        hasOtherDate,
+        onlyOtherDate = datelist.every(date => (date[1] != today[0] || date[2] != today[1]) && (date[1] != yesterday[0] || date[2] != yesterday[1]))
       }
-      result.prevpageNumber = hasOtherDate ? null : prevpageNumber
-      result.list = jobslist.filter(job => job.date === `${today[0]}/${today[1]}`)
+
+      let result = {
+        onlyOtherDate,
+      }
+      result.prevpageNumber = onlyOtherDate ? null : prevpageNumber
+      result.list = jobslist.filter(job => job.date === `${today[0]}/${today[1]}` || job.date === `${yesterday[0]}/${yesterday[1]}`)
       resolve(result)
     })
   })
@@ -92,11 +85,11 @@ const getPttJobslist = body => {
       result.push({ title, company, position, date, href })
     }
   })
-  return result
+  return result.reverse()
 }
 
 /**
- * 專案起始執行，直到指定日期(10/20)為止，一直往前翻頁
+ * 專案起始執行，直到指定日期(10/29)為止，一直往前翻頁
  */
 const dataBaseInit = async () => {
   const getJobsFormCurrentPage = async (url) => {
@@ -112,7 +105,7 @@ const dataBaseInit = async () => {
   
         let shouldStop = false
         datelist.forEach(date => {
-          if (date[1] == '10' && parseInt(date[2]) < 20) {
+          if (date[1] == '10' && parseInt(date[2]) < 29) {
             shouldStop = true
           }
         })
