@@ -27,3 +27,9 @@ let autoSchedule = schedule.scheduleJob('0 0 23 * * *', function () {
   const URL = process.env.SCHEDULE_URL || 'http://localhost:5000/job'
   request.post(URL)
 })
+
+// 每天三十分鐘戳一下heroku server，避免app被睡
+let herokuSchedule = schedule.scheduleJob('* */30 * * * *', function () {
+  const URL = process.env.HEROKU_URL || 'http://localhost:5000/'
+  request.get(URL)
+})
