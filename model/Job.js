@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { autoIncrement } = require('mongoose-plugin-autoinc-fix')
 
 const JobSchema = new mongoose.Schema({
   title: {
@@ -29,5 +30,7 @@ const JobSchema = new mongoose.Schema({
   timestamps: true,
   versionKey: false,
 })
+
+JobSchema.plugin(autoIncrement, { model: 'Job', field: 'Id' })
 
 module.exports = mongoose.model('Job', JobSchema)
