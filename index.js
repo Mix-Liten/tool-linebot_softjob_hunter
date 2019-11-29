@@ -5,13 +5,14 @@ const router = require('./routes')
 const request = require('request')
 const schedule = require('node-schedule')
 
-app.use(async (req, res, next) => {
-  // if (req.url === '/') next()
-  let start = new Date()
-  await next()
-  let ms = new Date() - start
-  console.log(req.method, req.url, `${ms} ms`)
-})
+// logs open when develop
+// app.use(async (req, res, next) => {
+//   // if (req.url === '/') next()
+//   let start = new Date()
+//   await next()
+//   let ms = new Date() - start
+//   console.log(req.method, req.url, `${ms} ms`)
+// })
 
 app.on('error', err => console.log(`server error ${err}`))
 
