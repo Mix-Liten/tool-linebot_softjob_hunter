@@ -38,21 +38,22 @@ SCHEDULE_URL = /job
 HEROKU_URL = /
 ```
 SCHEDULE_URL 是部署後的網址後加 `/job`，功用是每天換日時去爬前一天的文章
+
 HEROKU_URL 的用途比較不好說，因為 Heroku 免費方案三十分鐘沒事就會休眠，所以設定每三十分鐘就會戳一下
 
 ```
 TZ = Asia/Taipei
 ```
-為了確保伺服器時間符合預期，記得設定時區相關設定，以 Heroku 為例就是在環境變數中增加 `TZ` 變數，變數值要填什麼請查閱 [List of tz database time zones - Wiki](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+為了確保伺服器時間符合預期，記得設定時區相關設定，以 Heroku 為例，在環境變數中增加 `TZ` 變數，變數值要填什麼請查閱 [List of tz database time zones - Wiki](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 4. 事前準備結束，使用 [Heroku CLI](https://devcenter.heroku.com/categories/command-line) 將程式碼推到伺服器上
 
 5. 將步驟三有用到的變數設定到伺服器上
 
-6. 到 [Line Developers](https://developers.line.biz/) 設定 `Webhook URL`，並使用 `Verify` 測試功能串接成功與否
+6. 到 [Line Developers](https://developers.line.biz/) 設定 `Webhook URL`，如果沒改路由的話應該是部署後的網址後加 `/line`，並使用 `Verify` 測試功能串接成功與否
 
 ## Reference
 
-如果覺得文字步驟看不懂，請參考下方圖文並茂的教學，不過我看到的後台跟他的不一樣
+如果文字步驟看不懂，請參考下方圖文並茂的教學，不過我看到的後台跟他的不一樣
 
 - [做一個 LINE chatbot ！](https://medium.com/alpha-camp-%E5%8F%B0%E7%81%A3/%E5%81%9A%E4%B8%80%E5%80%8B-line-chatbot-628c7c3707c7) 
