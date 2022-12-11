@@ -13,7 +13,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "linebot": "^1.5.3",
     "mongoose": "^5.7.12",
     "mongoose-plugin-autoinc-fix": "^1.2.1",
